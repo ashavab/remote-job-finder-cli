@@ -6,6 +6,25 @@ import argparse
 from tabulate import tabulate
 from filters.filter_jobs import filter_jobs
 
+from rich.console import Console
+from rich.table import Table
+
+console = Console()
+
+# Display jobs in a nice table
+table = Table(title=f"Remote Jobs for '{keyword}' in '{location}'")
+
+table.add_column("#", style="cyan", width=4)
+table.add_column("Job Title", style="magenta")
+table.add_column("Company", style="green")
+table.add_column("Location", style="yellow")
+table.add_column("Link", style="blue", overflow="fold")
+
+for i, j in enumerate(all_jobs, 1):
+    table.add_row(str(i), j["title"], j["company"], j["location"], j["url"])
+
+console.print(table)
+
 # Add project root to Python path
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
